@@ -1,0 +1,2 @@
+braveConsumerFilter=com.mm.brave.dubbo.client.BraveConsumerFilter
+braveProviderFilter=com.mm.brave.dubbo.server.BraveProviderFilter
