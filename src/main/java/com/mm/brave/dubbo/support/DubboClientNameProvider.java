@@ -1,6 +1,6 @@
 package com.mm.brave.dubbo.support;
 
-import com.alibaba.dubbo.rpc.RpcContext;
+import com.alibaba.dubbo.rpc.Invocation;
 
 /**
  * resolveClientName
@@ -8,5 +8,5 @@ import com.alibaba.dubbo.rpc.RpcContext;
  */
 public interface DubboClientNameProvider
 {
-    public String resolveClientName(RpcContext rpcContext);
+    String resolveClientName(Invocation invocation);
 }

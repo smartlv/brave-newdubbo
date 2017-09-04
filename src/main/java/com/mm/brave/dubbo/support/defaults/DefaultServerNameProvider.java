@@ -1,6 +1,6 @@
 package com.mm.brave.dubbo.support.defaults;
 
-import com.alibaba.dubbo.rpc.RpcContext;
+import com.alibaba.dubbo.rpc.Invoker;
 import com.mm.brave.dubbo.support.DubboServerNameProvider;
 
 /**
@@ -10,9 +10,10 @@ import com.mm.brave.dubbo.support.DubboServerNameProvider;
 public class DefaultServerNameProvider implements DubboServerNameProvider
 {
     @Override
-    public String resolveServerName(RpcContext rpcContext)
+    public String resolveServerName(Invoker<?> invoker)
     {
-        String application = RpcContext.getContext().getUrl().getParameter("application");
+        String application = invoker.getUrl().getParameter("application");
+
         return application;
     }
 }

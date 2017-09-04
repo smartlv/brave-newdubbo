@@ -12,6 +12,7 @@ import com.mm.brave.dubbo.support.defaults.DefaultClientNameProvider;
 import com.mm.brave.dubbo.support.defaults.DefaultSpanNameProvider;
 import com.mm.brave.dubbo.utils.IPConvertUtil;
 import com.mm.brave.dubbo.utils.TraceLogUtil;
+import com.twitter.zipkin.gen.Endpoint;
 
 import java.net.InetSocketAddress;
 import java.util.Collection;
@@ -25,8 +26,8 @@ import static com.github.kristofa.brave.IdConversion.convertToLong;
  */
 public class DubboServerRequestAdapter implements ServerRequestAdapter
 {
-    private Invoker<?> invoker;
     private Invocation invocation;
+    private Invoker<?> invoker;
     private ServerTracer serverTracer;
     private final static DubboSpanNameProvider spanNameProvider = new DefaultSpanNameProvider();
     private final static DubboClientNameProvider clientNameProvider = new DefaultClientNameProvider();
@@ -78,9 +79,10 @@ public class DubboServerRequestAdapter implements ServerRequestAdapter
     {
         String ipAddr = RpcContext.getContext().getUrl().getIp();
         InetSocketAddress inetSocketAddress = RpcContext.getContext().getRemoteAddress();
-        final String clientName = clientNameProvider.resolveClientName(RpcContext.getContext());
+        final String clientName = clientNameProvider.resolveClientName(this.invocation);
 
-        serverTracer.setServerReceived(IPConvertUtil.convertToInt(ipAddr), inetSocketAddress.getPort(), clientName);
+        serverTracer.setServerReceived(Endpoint.builder().ipv4(IPConvertUtil.convertToInt(ipAddr))
+                .port(inetSocketAddress.getPort()).serviceName(clientName).build());
 
         InetSocketAddress socketAddress = RpcContext.getContext().getLocalAddress();
         if (socketAddress != null)

@@ -31,7 +31,7 @@ public class DubboClientResponseAdapter implements ClientResponseAdapter
     @Override
     public Collection<KeyValueAnnotation> responseAnnotations()
     {
-        List<KeyValueAnnotation> annotations = new ArrayList<KeyValueAnnotation>();
+        List<KeyValueAnnotation> annotations = new ArrayList<>();
         if (exception != null)
         {
             KeyValueAnnotation keyValueAnnotation = KeyValueAnnotation.create("exception", exception.getMessage());

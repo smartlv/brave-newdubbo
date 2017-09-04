@@ -1,11 +1,11 @@
 package com.mm.brave.dubbo.support;
 
-import com.alibaba.dubbo.rpc.RpcContext;
+import com.alibaba.dubbo.rpc.Invoker;
 
 /**
  * @author smart
  */
 public interface DubboServerNameProvider
 {
-    String resolveServerName(RpcContext rpcContext);
+    String resolveServerName(Invoker<?> invoker);
 }

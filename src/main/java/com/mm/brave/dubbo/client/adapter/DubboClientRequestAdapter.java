@@ -3,7 +3,6 @@ package com.mm.brave.dubbo.client.adapter;
 import com.alibaba.dubbo.common.URL;
 import com.alibaba.dubbo.rpc.Invocation;
 import com.alibaba.dubbo.rpc.Invoker;
-import com.alibaba.dubbo.rpc.RpcContext;
 import com.alibaba.dubbo.rpc.RpcInvocation;
 import com.github.kristofa.brave.ClientRequestAdapter;
 import com.github.kristofa.brave.IdConversion;
@@ -80,7 +79,10 @@ public class DubboClientRequestAdapter implements ClientRequestAdapter
         URL url = this.invoker.getUrl();
         String ipAddr = url.getIp();
         int port = url.getPort();
-        String serverName = serverNameProvider.resolveServerName(RpcContext.getContext());
+        String serverName = serverNameProvider.resolveServerName(this.invoker);
+        serverName = serverName == null ? url.getParameter("application") : serverName;
+        serverName = serverName == null ? "" : serverName;
+
         // 此处是拿不到服务端的serverName的,所以写了application
         return Endpoint.builder().serviceName(serverName).ipv4(IPConvertUtil.convertToInt(ipAddr)).port(port).build();
     }
