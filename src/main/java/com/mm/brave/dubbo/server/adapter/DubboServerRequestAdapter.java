@@ -4,10 +4,8 @@ import com.alibaba.dubbo.rpc.Invocation;
 import com.alibaba.dubbo.rpc.Invoker;
 import com.alibaba.dubbo.rpc.RpcContext;
 import com.github.kristofa.brave.*;
-import com.mm.brave.dubbo.support.DubboAppIdProvider;
 import com.mm.brave.dubbo.support.DubboClientNameProvider;
 import com.mm.brave.dubbo.support.DubboSpanNameProvider;
-import com.mm.brave.dubbo.support.defaults.DefaultAppIdProvider;
 import com.mm.brave.dubbo.support.defaults.DefaultClientNameProvider;
 import com.mm.brave.dubbo.support.defaults.DefaultSpanNameProvider;
 import com.mm.brave.dubbo.utils.IPConvertUtil;
@@ -31,7 +29,6 @@ public class DubboServerRequestAdapter implements ServerRequestAdapter
     private ServerTracer serverTracer;
     private final static DubboSpanNameProvider spanNameProvider = new DefaultSpanNameProvider();
     private final static DubboClientNameProvider clientNameProvider = new DefaultClientNameProvider();
-    private static final DubboAppIdProvider appIdProvider = new DefaultAppIdProvider();
 
     public DubboServerRequestAdapter(Invoker<?> invoker, Invocation invocation, ServerTracer serverTracer)
     {
@@ -53,11 +50,11 @@ public class DubboServerRequestAdapter implements ServerRequestAdapter
             final String parentId = invocation.getAttachment("parentId");
             final String spanId = invocation.getAttachment("spanId");
             final String traceId = invocation.getAttachment("traceId");
+            final String clientName = clientNameProvider.resolveClientName(this.invocation);
+
             if (traceId != null && spanId != null)
             {
-                TraceLogUtil.put("traceId",
-                        appIdProvider.resolveAppId(invocation) + "_" + TraceLogUtil.generateTraceLogIdPrefix()
-                                + traceId);
+                TraceLogUtil.put("traceId", clientName + "_" + TraceLogUtil.generateTraceLogIdPrefix() + traceId);
 
                 SpanId span = getSpanId(traceId, spanId, parentId);
 
