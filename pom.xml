@@ -19,7 +19,8 @@
         <!-- Common libs -->
         <spring_version>4.3.11.RELEASE</spring_version>
         <brave_version>4.3.0</brave_version>
-        <dubbo_version>2.6.0</dubbo_version>
+        <dubbo_version>2.6.2</dubbo_version>
+        <commons.lang3_version>3.6</commons.lang3_version>
     </properties>
 
     <dependencies>
@@ -51,12 +52,14 @@
         <dependency>
             <groupId>commons-beanutils</groupId>
             <artifactId>commons-beanutils</artifactId>
-            <version>1.8.3</version>
+            <version>1.9.3</version>
+            <scope>provided</scope>
         </dependency>
         <dependency>
-            <groupId>commons-lang</groupId>
-            <artifactId>commons-lang</artifactId>
-            <version>2.6</version>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+            <version>${commons.lang3_version}</version>
+            <scope>provided</scope>
         </dependency>
     </dependencies>
 
@@ -65,13 +68,13 @@
             <id>releases-bs</id>
             <uniqueVersion>true</uniqueVersion>
             <name>mimeng Release Repository</name>
-            <url>http://192.168.1.200:6001/nexus/content/repositories/releases/</url>
+            <url>http://172.17.202.200:6001/nexus/content/repositories/releases/</url>
         </repository>
         <snapshotRepository>
             <id>snapshots-bs</id>
             <uniqueVersion>true</uniqueVersion>
             <name>mimeng Snapshot Repository</name>
-            <url>http://192.168.1.200:6001/nexus/content/repositories/snapshots/</url>
+            <url>http://172.17.202.200:6001/nexus/content/repositories/snapshots/</url>
         </snapshotRepository>
     </distributionManagement>
 </project>

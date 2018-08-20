@@ -5,7 +5,7 @@ import com.github.kristofa.brave.EmptySpanCollectorMetricsHandler;
 import com.github.kristofa.brave.LoggingReporter;
 import com.github.kristofa.brave.Sampler;
 import com.github.kristofa.brave.http.HttpSpanCollector;
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.BeanInitializationException;
 import org.springframework.beans.factory.FactoryBean;
 
